@@ -1,6 +1,8 @@
 #Soda Kernel
 This is a kernel adiutor fork for [Soda Kernel](https://github.com/xNombre/android_kernel_xiaomi_msm8996_) (Xiaomi Mi5).
-[![Soda](https://img.xda-cdn.com/JLtvzR5rueX19iddzL1YPx0WSBc=/https%3A%2F%2Fs1.postimg.org%2F4q886gcncf%2Fxdabanner.png_)]
+
+
+[![Soda](https://github.com/harsh97/KernelAdiutor/xdabanner.png)]
 
 
 

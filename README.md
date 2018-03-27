@@ -1,3 +1,11 @@
+#Soda Kernel
+This is a kernel adiutor fork for [Soda Kernel](https://github.com/xNombre/android_kernel_xiaomi_msm8996_) (Xiaomi Mi5).
+[![Soda](https://img.xda-cdn.com/JLtvzR5rueX19iddzL1YPx0WSBc=/https%3A%2F%2Fs1.postimg.org%2F4q886gcncf%2Fxdabanner.png_)]
+
+
+
+
+
 # KernelAdiutor
 
 [![Build Status](https://travis-ci.org/Grarak/KernelAdiutor.svg?branch=master)](https://travis-ci.org/Grarak/KernelAdiutor)
@@ -75,16 +83,16 @@ _(Many sys interface paths has been taken from his [UKM-Project](https://github.
 ## License
 
     Copyright (C) 2015-2016 Willi Ye <williye97@gmail.com>
-    
+
     Kernel Adiutor is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     Kernel Adiutor is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
     along with Kernel Adiutor.  If not, see <http://www.gnu.org/licenses/>.

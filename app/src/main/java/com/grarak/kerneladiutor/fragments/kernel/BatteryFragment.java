@@ -47,7 +47,7 @@ public class BatteryFragment extends RecyclerViewFragment {
     private Battery mBattery;
 
     private StatsView mLevel;
-    private StatsView mVoltage;
+    private StatsView mVoltage,chargesNum;
 
     private int mBatteryLevel;
     private int mBatteryVoltage;
@@ -138,29 +138,63 @@ public class BatteryFragment extends RecyclerViewFragment {
         CardView chargeRateCard = new CardView();
         chargeRateCard.setTitle(getString(R.string.charge_rate));
 
-        if (mBattery.hasChargeRateEnable()) {
-            SwitchView chargeRate = new SwitchView();
-            chargeRate.setSummary(getString(R.string.charge_rate));
-            chargeRate.setChecked(mBattery.isChargeRateEnabled());
-            chargeRate.addOnSwitchListener((switchView, isChecked)
-                    -> mBattery.enableChargeRate(isChecked, getActivity()));
-
-            chargeRateCard.addItem(chargeRate);
-        }
+//        if (mBattery.hasChargeRateEnable()) {
+//            SwitchView chargeRate = new SwitchView();
+//            chargeRate.setSummary(getString(R.string.charge_rate));
+//            chargeRate.setChecked(mBattery.isChargeRateEnabled());
+//            chargeRate.addOnSwitchListener((switchView, isChecked)
+//                    -> mBattery.enableChargeRate(isChecked, getActivity()));
+//
+//            chargeRateCard.addItem(chargeRate);
+//        }
 
         if (mBattery.hasChargingCurrent()) {
             SeekBarView chargingCurrent = new SeekBarView();
             chargingCurrent.setTitle(getString(R.string.charging_current));
             chargingCurrent.setSummary(getString(R.string.charging_current_summary));
             chargingCurrent.setUnit(getString(R.string.ma));
-            chargingCurrent.setMax(1500);
-            chargingCurrent.setMin(100);
+            chargingCurrent.setMax(3000);
+            chargingCurrent.setMin(900);
             chargingCurrent.setOffset(10);
-            chargingCurrent.setProgress(mBattery.getChargingCurrent() / 10 - 10);
+            chargingCurrent.setProgress(mBattery.getChargingCurrent() / 10 - 90);
             chargingCurrent.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
                 @Override
                 public void onStop(SeekBarView seekBarView, int position, String value) {
-                    mBattery.setChargingCurrent((position + 10) * 10, getActivity());
+                    mBattery.setChargingCurrent((position + 90) * 10, getActivity());
+                }
+
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+            });
+            
+
+            chargeRateCard.addItem(chargingCurrent);
+        }
+        if (mBattery.hasChargeLimit()) {
+            SeekBarView rechargeAt = new SeekBarView();
+            SeekBarView chargeLimit = new SeekBarView();
+            chargeLimit.setTitle(("Charge Limit"));
+            chargeLimit.setSummary(getString(R.string.charge_limit_summary));
+            chargeLimit.setUnit("%");
+            chargeLimit.setMax(100);
+            chargeLimit.setMin(0);
+            chargeLimit.setOffset(1);
+            chargeLimit.setProgress(mBattery.getChargeLimit());
+            chargeLimit.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    mBattery.setChargeLimit(position , getActivity());
+                    if(position==0)
+                    {
+                        mBattery.setRechargeAt(position , getActivity());
+                        rechargeAt.setProgress(position);
+                    }
+                   else if(mBattery.getRechargeAt()>=position)
+                    {
+                        mBattery.setRechargeAt(mBattery.getChargeLimit()-1 , getActivity());
+                        rechargeAt.setProgress(mBattery.getChargeLimit()-1);
+                    }
                 }
 
                 @Override
@@ -168,8 +202,65 @@ public class BatteryFragment extends RecyclerViewFragment {
                 }
             });
 
-            chargeRateCard.addItem(chargingCurrent);
+
+            chargeRateCard.addItem(chargeLimit);
+
+        
+
+
+            rechargeAt.setTitle("Lower Charge Limit");
+            rechargeAt.setSummary(getString(R.string.lower_charge_limit_summary));
+            rechargeAt.setUnit("%");
+            rechargeAt.setMax(100);
+            rechargeAt.setMin(0);
+            rechargeAt.setOffset(1);
+            rechargeAt.setProgress(mBattery.getRechargeAt());
+            rechargeAt.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+                    if(mBattery.getChargeLimit()<position)
+                    {
+                        mBattery.setRechargeAt(mBattery.getChargeLimit()-1 , getActivity());
+                        rechargeAt.setProgress(mBattery.getChargeLimit()-1);
+                    }
+                    else
+                        mBattery.setRechargeAt(position,getActivity());
+                }
+
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+            });
+
+
+            chargeRateCard.addItem(rechargeAt);
         }
+        if (mBattery.hasFullChargeEvery()) {
+            SeekBarView fullChargeEvery = new SeekBarView();
+            fullChargeEvery.setTitle("Full Charge After");
+            fullChargeEvery.setSummary(getString(R.string.recharge_at_summary)+mBattery.getChargeCounter());
+
+            fullChargeEvery.setMax(100);
+            fullChargeEvery.setMin(1);
+            fullChargeEvery.setOffset(1);
+            fullChargeEvery.setProgress(mBattery.getFullChargeEvery()-1);
+            fullChargeEvery.setOnSeekBarListener(new SeekBarView.OnSeekBarListener() {
+                @Override
+                public void onStop(SeekBarView seekBarView, int position, String value) {
+
+                        mBattery.setFullChargeEvery(position+1,getActivity());
+                }
+
+                @Override
+                public void onMove(SeekBarView seekBarView, int position, String value) {
+                }
+            });
+
+
+            chargeRateCard.addItem(fullChargeEvery);
+        }
+
+
 
         if (chargeRateCard.size() > 0) {
             items.add(chargeRateCard);

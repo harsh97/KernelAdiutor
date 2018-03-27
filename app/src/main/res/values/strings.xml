@@ -564,10 +564,13 @@
     <string name="usb_fast_charge_summary">Device will charge faster when connected with USB. Replug your charger when changing this option.</string>
     <string name="blx">Battery Life eXtender</string>
     <string name="blx_summary">Set a limit for the capacity to which the battery will be charged by passing a value between 0 and 100.</string>
-    <string name="charge_rate">Charge Rate</string>
+    <string name="charge_rate">Charging Parameters</string>
     <string name="charging_current">Charging Current</string>
-    <string name="charging_current_summary">Set charging current. Caution: Exceeding 1250mA may damage your charging driver.</string>
-
+    <string name="charging_current_summary">Set charging current. Caution: Exceeding 2800mA may damage your charging driver.</string>
+    <string name="charge_limit_summary">Set charge limit. Tip: Setting this value to zero disables it altogether </string>
+    <string name="lower_charge_limit_summary">Set Lower Charge Limit. Phone will start charging again when battery drops below this point. Caution: This value must be less than Charge Limit</string>
+    <string name="recharge_at_summary">Kernel ignores charge limit parameter every x recharge. Tip: Setting this value helps in dealing with battery calibration issues that might occur due to partial charging.
+Number of Recharges since last full charge:</string>
     <!-- LED -->
     <string name="fade">Fade</string>
     <string name="fade_summary">Enable for fading, disable for blinking.</string>

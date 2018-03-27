@@ -42,14 +42,18 @@ public class Battery {
         }
         return sInstance;
     }
-
+    private static  final String SODA="/sys/kernel/fast_charge";
     private static final String FORCE_FAST_CHARGE = "/sys/kernel/fast_charge/force_fast_charge";
     private static final String BLX = "/sys/devices/virtual/misc/batterylifeextender/charging_limit";
 
     private static final String CHARGE_RATE = "/sys/kernel/thundercharge_control";
     private static final String CHARGE_RATE_ENABLE = CHARGE_RATE + "/enabled";
     private static final String CUSTOM_CURRENT = CHARGE_RATE + "/custom_current";
-
+    private static final String CHARGE_RATE_SODA = SODA + "/maximum_qc_current";
+    private static final String FULL_CHARGE_EVERY_SODA= SODA + "/full_charge_every";
+    private static final String CHARGES_COUNTER_SODA = SODA + "/charges_counter";
+    private static final String RECHARGE_AT_SODA = SODA + "/recharge_at";
+    private static final String CHARGE_LIMIT_SODA = SODA + "/charge_limit";
     private int mCapacity;
 
     private Battery(Context context) {
@@ -66,29 +70,66 @@ public class Battery {
             }
         }
     }
-
-    public void setChargingCurrent(int value, Context context) {
-        run(Control.write(String.valueOf(value), CUSTOM_CURRENT), CUSTOM_CURRENT, context);
+    public void setChargeLimit(int value,Context context)
+    {
+        run(Control.write(String.valueOf(value), CHARGE_LIMIT_SODA), CHARGE_LIMIT_SODA, context);
     }
+    public void setFullChargeEvery(int value, Context context)
+    {
+        run(Control.write(String.valueOf(value), FULL_CHARGE_EVERY_SODA), FULL_CHARGE_EVERY_SODA, context);
+    }
+    public void setRechargeAt(int value, Context context)
+    {
+        run(Control.write(String.valueOf(value), RECHARGE_AT_SODA), RECHARGE_AT_SODA, context);
+    }
+    public void setChargingCurrent(int value, Context context) {
+        run(Control.write(String.valueOf(value), CHARGE_RATE_SODA), CHARGE_RATE_SODA, context);
+    }
+
 
     public int getChargingCurrent() {
-        return Utils.strToInt(Utils.readFile(CUSTOM_CURRENT));
+        return Utils.strToInt(Utils.readFile(CHARGE_RATE_SODA));
+    }
+    public int getChargeLimit() {
+        return Utils.strToInt(Utils.readFile(CHARGE_LIMIT_SODA));
+    }
+    public int getFullChargeEvery() {
+        return Utils.strToInt(Utils.readFile(FULL_CHARGE_EVERY_SODA));
+    }
+    public int getRechargeAt() {
+        return Utils.strToInt(Utils.readFile(RECHARGE_AT_SODA));
+    }
+    public int getChargeCounter() {
+        return Utils.strToInt(Utils.readFile(CHARGES_COUNTER_SODA));
+    }
+    public boolean hasChargingCurrent() {
+        return Utils.existFile(CHARGE_RATE_SODA);
+    }
+    public boolean hasChargeLimit() {
+        return Utils.existFile(CHARGE_LIMIT_SODA);
+    }
+    public boolean hasFullChargeEvery() {
+        return Utils.existFile(FULL_CHARGE_EVERY_SODA);
+    }
+    public boolean hasRechargeAt() {
+        return Utils.existFile(RECHARGE_AT_SODA);
+    }
+    public boolean hasChargeCounter() {
+        return Utils.existFile(CHARGES_COUNTER_SODA);
     }
 
-    public boolean hasChargingCurrent() {
-        return Utils.existFile(CUSTOM_CURRENT);
-    }
+
 
     public void enableChargeRate(boolean enable, Context context) {
         run(Control.write(enable ? "1" : "0", CHARGE_RATE_ENABLE), CHARGE_RATE_ENABLE, context);
     }
 
     public boolean isChargeRateEnabled() {
-        return Utils.readFile(CHARGE_RATE_ENABLE).equals("1");
+        return true;
     }
 
     public boolean hasChargeRateEnable() {
-        return Utils.existFile(CHARGE_RATE_ENABLE);
+        return true;
     }
 
     public void setBlx(int value, Context context) {

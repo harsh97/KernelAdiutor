@@ -91,8 +91,6 @@
         <service android:name=".services.boot.ApplyOnBootService" />
         <receiver android:name=".services.boot.ApplyOnBoot$CancelReceiver" />
 
-        <service android:name=".services.monitor.Monitor" />
-        <receiver android:name=".services.monitor.Monitor$DisableReceiver" />
 
         <!-- Profile Widget -->
         <receiver android:name=".services.profile.Widget">

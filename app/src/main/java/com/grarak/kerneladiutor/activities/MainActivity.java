@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crashlytics.android.answers.Answers;
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View splashBackground = findViewById(R.id.splash_background);
+        ImageView splashBackground = findViewById(R.id.splash_background);
         mRootAccess = findViewById(R.id.root_access_text);
         mBusybox = findViewById(R.id.busybox_text);
         mCollectInfo = findViewById(R.id.info_collect_text);

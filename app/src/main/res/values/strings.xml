@@ -9,7 +9,7 @@
     <string name="no_busybox">No busybox</string>
     <string name="open">Open %s</string>
     <string name="disable">Disable</string>
-
+    <string name="splash">Soda Splash</string>
     <!-- Security -->
     <string name="password">Password</string>
     <string name="password_wrong">Password is wrong</string>
